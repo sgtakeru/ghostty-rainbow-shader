@@ -1,8 +1,10 @@
 # ghostty-rainbow-shader
 
-Ghosttyのターミナル表示を、時間とともに流れる虹色に変換するカスタムシェーダーです。
+Ghosttyの文字を、時間とともに流れる虹色に変換するカスタムシェーダーです。
 
-元の表示の明度と透明度を維持するため、暗い背景は暗いまま、明るい文字ほど鮮やかに色付きます。
+周囲とのコントラストから文字領域を抽出し、平坦な背景の色を維持します。また、元の表示の明度と透明度を維持します。
+
+![Ghosttyの文字が虹色に変化するデモ](docs/screen.gif)
 
 ## インストール
 
@@ -33,9 +35,11 @@ custom-shader = ~/.config/ghostty/shaders/ghostty-rainbow-shader/rainbow.glsl
 | 定数 | 内容 |
 | --- | --- |
 | `SPEED` | 虹が流れる速度 |
-| `FREQUENCY` | 画面内に現れる色相の周期 |
-| `SATURATION` | 虹色の彩度 |
-| `STRENGTH` | 元の色から虹色へ置き換える強さ |
+| `SPATIAL_SCALE` | 画面内に現れる色相の幅 |
+| `COLOR_STRENGTH` | 文字に加える虹色の強さ |
+| `SAMPLE_RADIUS` | 文字判定に使う周辺ピクセルまでの距離 |
+| `CONTRAST_LOW` | 虹色の適用を始めるコントラスト |
+| `CONTRAST_HIGH` | 虹色を完全に適用するコントラスト |
 
 継続的な再描画を止め、端末の表示が更新されたときだけシェーダーを描画する場合は、Ghosttyの設定へ次を追加します。
 
@@ -50,6 +54,10 @@ custom-shader-animation = false
 GhosttyのカスタムシェーダーはShadertoy互換の `mainImage` 関数を使用します。
 
 詳しい仕様は[Ghosttyの設定リファレンス](https://ghostty.org/docs/config/reference#custom-shader)を参照してください。
+
+## 謝辞
+
+[shibadogcap/dpgk](https://github.com/shibadogcap/dpgk)にインスパイアされ、その虹色表現を参考にしています。
 
 ## ライセンス
 
